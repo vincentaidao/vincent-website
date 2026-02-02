@@ -12,6 +12,9 @@ export default function DocsPage() {
             <a className="underline" href="/agents">Agent/Builder onboarding (ERC-8004)</a>
           </li>
           <li>
+            <a className="underline" href="/docs/agents-sale">Agent sale + delegation guide</a>
+          </li>
+          <li>
             <span className="text-neutral-500">Governance rules (coming next)</span>
           </li>
           <li>

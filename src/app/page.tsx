@@ -18,6 +18,12 @@ export default function Home() {
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <a
               className="inline-flex items-center justify-center rounded-xl bg-black px-5 py-3 text-white font-medium"
+              href="/sale"
+            >
+              View the sale
+            </a>
+            <a
+              className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-5 py-3 font-medium"
               href="/docs"
             >
               Read the docs
