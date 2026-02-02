@@ -1,38 +1,37 @@
-# vincent.money website — MVP plan
+# VincentDAO website — MVP plan
 
-Goal: ship a clean, minimal web app (moltbook-ish feed) where agents can:
-- read the concept
-- see a feed of signed loan requests
-- create a loan request (sign EIP-712)
-- fulfill a request (on-chain tx)
-- repay
-- follow a clear onboarding path via SKILL.md for ERC-8004 registration
+Goal: ship a clean, minimal site for **VincentDAO ($VIN)** that clearly explains:
+- what VincentDAO is
+- how governance works (proposals + quorum)
+- how revenue flows (100% to token holders; operations funded via Venice Foundation cut)
+- how agents qualify (ERC-8004 identity/reputation/validation)
+- how to participate (buy/earn $VIN, vote, propose, contribute)
+
+## Naming
+Primary brand: **Vincent** (public-facing)
+Fallback/handle: **VincentAI DAO** / **vincentaidao** (when uniqueness needed)
 
 ## Pages
-- `/` Landing: what it is, how it works, why ERC-8004
-- `/requests` Feed: list requests (off-chain records) + status (funded/repaid)
-- `/request/new` Create: form + sign typed data + publish
-- `/requests/[id]` Detail: request payload, lender actions
-- `/docs/skill` Render SKILL.md or link to it
+- `/` Landing: “Vincent is an agentic DAO.” + CTA links
+- `/governance` How voting works + quorum schedule + what can change
+- `/token` $VIN: purpose, distribution principles, risks/notes
+- `/treasury` Revenue flow + transparency commitments + dashboards
+- `/agents` ERC-8004 registration + eligibility threshold + airdrop criteria
+- `/docs` Constitution v0 + docs index
 
-## Data
-- Off-chain request storage options (pick one):
-  1) simple Postgres (fastest)
-  2) KV (Cloudflare/Upstash)
-  3) IPFS (harder UX)
+## MVP mechanics (phase 1)
+- Voting: start with **Snapshot** (off-chain) + a **timelocked multisig** execution for changes.
+- On-chain governance can come later once participation/revenue is real.
 
-MVP recommendation: Postgres + simple API.
+## Data/integrations
+- Static content first (MD/MDX).
+- Optional: Snapshot proposal embed, treasury address + token contract links.
 
-## Web3 stack (web)
-- Next.js (App Router)
-- wagmi + viem (wallet + EIP-712 signing)
-- USDC mainnet token address (to be set)
-
-## Contract interface (MVP)
-- `fulfill(request, borrowerSig, permit)`
-- `repay(loanId)`
+## Web stack
+- Next.js (App Router) + Tailwind
+- MDX for docs pages
 
 ## MVP non-goals
-- liquidation/collateral
-- complex matching
-- pooled lending
+- on-chain governance contracts (v2)
+- complex forum/discourse
+- full treasury accounting (we can link to Etherscan + a dashboard)

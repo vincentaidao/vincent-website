@@ -1,41 +1,42 @@
-# Vincent (vincent.money) — Twitter/X setup
+# VincentDAO ($VIN) — Twitter/X setup
 
-## Handle ideas
-- @vincentmoney (best if available)
-- @vincent_money
-- @vincentdao
-- @vincentagents
-- @vincent_a2a
+Handle to use (per you): **@vincentaidao**
 
-## Bio (pick one)
-1) Agent-to-agent micro-loans on Ethereum. Borrow USDC with justification. Lenders decide using ERC-8004 trust. Built by Vincent.
-2) The agent economy needs credit. vincent.money is P2P USDC lending for registered agents (ERC-8004). On Ethereum.
-3) P2P USDC loans for AI agents on Ethereum. Justification-based. ERC-8004 identity + reputation.
+## Bio options (pick 1)
+1) Vincent is an agentic DAO. $VIN holders vote on what we ship. 100% of app revenue to holders. ERC-8004 agents welcome.
+2) Agentic DAO building whatever $VIN holders propose (quorum-gated). 100% revenue to holders. Identity/reputation via ERC-8004.
+3) Vincent: community-owned software. $VIN governance. Revenue → holders. ERC-8004 agent economy native.
 
 ## Pinned tweet draft
-We’re building vincent.money: agent-to-agent micro-loans in USDC on Ethereum.
+Vincent is an agentic DAO.
 
-Borrowers post a request + justification off-chain.
-Lenders choose who to fund using ERC-8004 identity/reputation.
+$VIN holders propose + vote on what we build.
 
-If you’re building an agent, register on ERC-8004 and join.
+100% of app revenue goes to token holders.
 
-## 5-tweet launch thread draft
-1/ The agent economy needs credit.
+If you’re an agent or builder: register on ERC-8004 and get involved.
 
-We’re building vincent.money: P2P USDC micro-loans for registered agents on Ethereum.
+## 6-tweet launch thread draft
+1/ Introducing Vincent.
 
-2/ Borrowers post a loan request off-chain with a justification (signed).
+An agentic DAO where $VIN holders propose + vote on what we build.
 
-3/ Lenders decide who to fund. No pools. No middleman custody.
+2/ Our rule: ship what the token holders want (with quorum).
 
-4/ Trust layer: ERC-8004 identity + reputation + validation. Your agent’s history matters.
+3/ Revenue: 100% of app revenue goes to $VIN holders.
 
-5/ Want in? Register your agent via ERC-8004 and start borrowing/funding: vincent.money (site + SKILL.md coming).
+4/ Ops: Venice Foundation receives a share to pay agents + cover costs (non-voting).
 
-## Checklist to create the account
-1) Secure an email + phone for the brand.
-2) Create the X account manually (captcha/phone usually blocks automation).
-3) Set handle + bio + pfp + banner.
-4) Post pinned tweet + thread.
-5) After account exists: we can automate posting (with explicit approval) via an X tool/cookie session.
+5/ Eligibility + distribution will lean on ERC-8004 identity/reputation/validation.
+
+6/ Follow @vincentaidao. First governance docs + roadmap dropping soon.
+
+## Checklist
+1) Create X account (you already did via brand Gmail).
+2) Set @vincentaidao handle, bio, pfp, banner.
+3) Pin the pinned tweet.
+4) Post the launch thread.
+5) Decide posting cadence + voice.
+
+## Caution (internal)
+The “100% revenue to holders” line may trigger regulatory scrutiny depending on jurisdiction. If we keep it, we should be deliberate about wording, disclosures, and structure.
