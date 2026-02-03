@@ -26,25 +26,33 @@ async function getSaleState() {
     ]);
 
     return {
-      totalRaisedEth: Number(ethers.formatEther(totalRaised)),
-      capEth: Number(ethers.formatEther(cap)),
+      totalRaisedWei: BigInt(totalRaised),
+      capWei: BigInt(cap),
       finalized: Boolean(finalized),
     };
   } catch (error) {
     console.error("Sale status read failed", error);
-    return { totalRaisedEth: 0, capEth: 0, finalized: false };
+    return { totalRaisedWei: 0n, capWei: 0n, finalized: false };
   }
 }
 
 export default async function SaleStatusPage() {
   const saleState = await getSaleState();
-  const remaining = Math.max(saleState.capEth - saleState.totalRaisedEth, 0);
-  const isCapMet = saleState.capEth > 0 && saleState.totalRaisedEth >= saleState.capEth;
+  const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : 0n;
+  const isCapMet = saleState.capWei > 0n && saleState.totalRaisedWei >= saleState.capWei;
   const status = saleState.finalized
     ? "Finalized"
     : isCapMet
       ? "Finalizable"
       : "Open";
+
+  const formatEth = (valueWei: bigint) => {
+    const raw = ethers.formatEther(valueWei);
+    const [whole, frac = ""] = raw.split(".");
+    const padded = (frac + "000000").slice(0, 6);
+    const trimmed = padded.replace(/0+$/, "");
+    return trimmed.length > 0 ? `${whole}.${trimmed}` : `${whole}.000000`;
+  };
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -64,16 +72,16 @@ export default async function SaleStatusPage() {
               <span className="font-medium">Sale contract:</span> {SALE_CONFIG.saleContract}
             </div>
             <div>
-              <span className="font-medium">Cap:</span> {saleState.capEth} ETH
+              <span className="font-medium">Cap:</span> {formatEth(saleState.capWei)} ETH
             </div>
             <div>
               <span className="font-medium">Price:</span> {SALE_CONFIG.vinPerEth.toLocaleString()} VIN / ETH
             </div>
             <div>
-              <span className="font-medium">Total raised:</span> {saleState.totalRaisedEth} ETH
+              <span className="font-medium">Total raised:</span> {formatEth(saleState.totalRaisedWei)} ETH
             </div>
             <div>
-              <span className="font-medium">Remaining:</span> {remaining} ETH
+              <span className="font-medium">Remaining:</span> {formatEth(remainingWei)} ETH
             </div>
             <div>
               <span className="font-medium">Status:</span> {status}
@@ -82,6 +90,11 @@ export default async function SaleStatusPage() {
         </div>
 
         <div className="mt-8 text-sm text-neutral-500">On-chain reads via Sepolia RPC.</div>
+        {process.env.NODE_ENV !== "production" && (
+          <div className="mt-2 text-xs text-neutral-500">
+            raw wei — cap: {saleState.capWei.toString()} · raised: {saleState.totalRaisedWei.toString()} · remaining: {remainingWei.toString()}
+          </div>
+        )}
       </div>
     </div>
   );
