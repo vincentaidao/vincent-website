@@ -185,14 +185,14 @@ export default function Home() {
                           {VIN_ADDRESS}
                         </a>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
-                          className="border border-neutral-800"
+                          className="h-8 w-8"
                           type="button"
                           aria-label="Copy $VIN address"
                           onClick={() => handleCopy(VIN_ADDRESS, "vin")}
                         >
-                          <Copy className="h-4 w-4" />
+                          <Copy className="h-4 w-4 text-neutral-200" />
                         </Button>
                         {copied === "vin" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
@@ -204,14 +204,14 @@ export default function Home() {
                           {SALE_ADDRESS}
                         </a>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
-                          className="border border-neutral-800"
+                          className="h-8 w-8"
                           type="button"
                           aria-label="Copy sale address"
                           onClick={() => handleCopy(SALE_ADDRESS, "sale")}
                         >
-                          <Copy className="h-4 w-4" />
+                          <Copy className="h-4 w-4 text-neutral-200" />
                         </Button>
                         {copied === "sale" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
@@ -248,7 +248,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="mt-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+          <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
             <CardHeader>
               <CardTitle>Airdrop claims</CardTitle>
             </CardHeader>

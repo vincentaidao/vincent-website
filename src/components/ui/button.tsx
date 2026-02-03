@@ -11,9 +11,9 @@ export function Button({
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "default" | "outline" | "ghost"; size?: "default" | "icon" }) {
   const styles =
     variant === "outline"
-      ? "border border-neutral-700 text-neutral-200 hover:border-neutral-500"
+      ? "border border-neutral-700 bg-transparent text-neutral-200 hover:border-neutral-500 hover:bg-neutral-900/40"
       : variant === "ghost"
-        ? "text-neutral-200 hover:bg-neutral-900"
+        ? "bg-transparent text-neutral-200 hover:bg-neutral-900/40"
         : "bg-neutral-50 text-neutral-950 hover:bg-white";
   const sizes = size === "icon" ? "h-8 w-8 p-0" : "";
   return <button className={`${base} ${styles} ${sizes} ${className}`} {...props} />;
