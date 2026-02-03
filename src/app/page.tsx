@@ -153,7 +153,7 @@ export default function Home() {
             <CardHeader className="space-y-1">
               <CardTitle>Sepolia $VIN Sale</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               {IS_FALLBACK_RPC && (
                 <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
                   Using fallback RPC. Set NEXT_PUBLIC_SEPOLIA_RPC_URL to an Infura Sepolia URL in Vercel.
@@ -250,10 +250,9 @@ export default function Home() {
 
           <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
             <CardHeader>
-              <CardTitle>Airdrop claims</CardTitle>
+              <CardTitle>Airdrop</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-xs text-neutral-400">Claimed agents</div>
               <div className="mt-1 text-lg font-semibold text-neutral-50">
                 {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
               </div>
