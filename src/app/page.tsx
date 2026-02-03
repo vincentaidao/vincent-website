@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { Copy } from "lucide-react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { Button } from "../components/ui/button";
+import CopyButton from "../components/ui/copy-button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 
 const VIN_ADDRESS = "0xb3186210A6f958DD1f59aA661B04C99cbEC5d85D";
@@ -83,7 +83,6 @@ export default function Home() {
     loading: true,
     totalClaimedVin: 0n,
   });
-  const [copied, setCopied] = useState<string | null>(null);
 
   const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
 
@@ -98,16 +97,6 @@ export default function Home() {
 
   const claimedAgents = saleState.totalClaimedVin ? saleState.totalClaimedVin / CLAIM_AMOUNT : 0n;
   const claimedPercent = TOTAL_AGENTS > 0n ? Number((claimedAgents * 10000n) / TOTAL_AGENTS) / 100 : 0;
-
-  const handleCopy = async (value: string, key: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied((prev) => (prev === key ? null : prev)), 1200);
-    } catch (error) {
-      console.error("Copy failed", error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
@@ -184,17 +173,13 @@ export default function Home() {
                         <a className="truncate hover:text-neutral-100" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">
                           {VIN_ADDRESS}
                         </a>
-                        <Button
+                        <CopyButton
+                          content={VIN_ADDRESS}
+                          ariaLabel="Copy $VIN address"
                           variant="outline"
                           size="icon"
                           className="h-8 w-8"
-                          type="button"
-                          aria-label="Copy $VIN address"
-                          onClick={() => handleCopy(VIN_ADDRESS, "vin")}
-                        >
-                          <Copy className="h-4 w-4 text-neutral-200" />
-                        </Button>
-                        {copied === "vin" && <span className="text-xs text-neutral-400">Copied</span>}
+                        />
                       </div>
                     </div>
                     <div>
@@ -203,17 +188,13 @@ export default function Home() {
                         <a className="truncate hover:text-neutral-100" href={`${EXPLORER}${SALE_ADDRESS}`} target="_blank" rel="noreferrer">
                           {SALE_ADDRESS}
                         </a>
-                        <Button
+                        <CopyButton
+                          content={SALE_ADDRESS}
+                          ariaLabel="Copy sale address"
                           variant="outline"
                           size="icon"
                           className="h-8 w-8"
-                          type="button"
-                          aria-label="Copy sale address"
-                          onClick={() => handleCopy(SALE_ADDRESS, "sale")}
-                        >
-                          <Copy className="h-4 w-4 text-neutral-200" />
-                        </Button>
-                        {copied === "sale" && <span className="text-xs text-neutral-400">Copied</span>}
+                        />
                       </div>
                     </div>
                   </div>
