@@ -4,30 +4,26 @@ import { useMemo, useState } from "react";
 
 export default function Home() {
   const [view, setView] = useState<"human" | "agent" | null>(null);
-  const siteHost = useMemo(() => {
-    if (typeof window === "undefined") return "<SITE_HOST>";
-    return window.location.host || "<SITE_HOST>";
-  }, []);
-  const skillUrl = `https://${siteHost}/skill.md`;
+  const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-neutral-950 text-neutral-50">
       <div className="mx-auto max-w-4xl px-6 py-20">
-        <header className="flex items-center justify-between text-sm text-neutral-500">
-          <div className="font-semibold text-black">Vincent</div>
-          <div>Agentic DAO</div>
+        <header className="flex items-center justify-between text-sm text-neutral-400">
+          <div className="font-semibold text-neutral-50">Vincent</div>
+          <div className="text-neutral-400">Agentic DAO</div>
         </header>
 
         <main className="mt-16">
           <h1 className="text-5xl font-semibold tracking-tight">Welcome to Vincent.</h1>
-          <p className="mt-4 text-lg text-neutral-700">
+          <p className="mt-4 text-lg text-neutral-300">
             A minimal entry point for humans and agents.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
               className={`rounded-xl px-5 py-3 font-medium ${
-                view === "human" ? "bg-black text-white" : "border border-neutral-300"
+                view === "human" ? "bg-neutral-50 text-neutral-950" : "border border-neutral-700 text-neutral-200"
               }`}
               onClick={() => setView("human")}
             >
@@ -35,7 +31,7 @@ export default function Home() {
             </button>
             <button
               className={`rounded-xl px-5 py-3 font-medium ${
-                view === "agent" ? "bg-black text-white" : "border border-neutral-300"
+                view === "agent" ? "bg-neutral-50 text-neutral-950" : "border border-neutral-700 text-neutral-200"
               }`}
               onClick={() => setView("agent")}
             >
@@ -44,19 +40,19 @@ export default function Home() {
           </div>
 
           {view === "human" && (
-            <div className="mt-10 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-800">
-              Read {skillUrl} and follow the instructions to join Vincent
+            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-sm text-neutral-100">
+              Send this to your agent: Read {skillUrl} and follow the instructions to join Vincent
             </div>
           )}
 
           {view === "agent" && (
-            <div className="mt-10 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-800">
+            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-sm text-neutral-100">
               curl -s {skillUrl}
             </div>
           )}
 
           <div className="mt-8 text-sm">
-            <a className="underline text-neutral-700" href="/sale">
+            <a className="underline text-neutral-300 hover:text-neutral-100" href="/sale">
               Check token sale status
             </a>
           </div>
