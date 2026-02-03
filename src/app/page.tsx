@@ -19,6 +19,7 @@ type SaleState = {
   capWei: bigint;
   finalized: boolean;
   ok: boolean;
+  loading: boolean;
   errorMessage?: string;
 };
 
@@ -36,6 +37,7 @@ async function fetchSaleState(): Promise<SaleState> {
       capWei: BigInt(cap),
       finalized: Boolean(finalized),
       ok: true,
+      loading: false,
     };
   } catch (error) {
     console.error("Sale status read failed", error);
@@ -44,6 +46,7 @@ async function fetchSaleState(): Promise<SaleState> {
       capWei: BigInt(0),
       finalized: false,
       ok: false,
+      loading: false,
       errorMessage: "RPC error",
     };
   }
@@ -63,6 +66,7 @@ export default function Home() {
     capWei: BigInt(0),
     finalized: false,
     ok: true,
+    loading: true,
   });
 
   const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
@@ -138,10 +142,18 @@ export default function Home() {
                 Using fallback RPC (set NEXT_PUBLIC_SEPOLIA_RPC_URL to an Infura Sepolia URL in Vercel).
               </div>
             )}
-            {!saleState.ok && (
+            {!saleState.ok && !saleState.loading && (
               <div className="mt-3 text-sm text-amber-200">Status unavailable (RPC error)</div>
             )}
-            {saleState.ok && (
+            {saleState.loading && (
+              <div className="mt-4 space-y-3">
+                <div className="h-3 w-3/4 rounded bg-neutral-800" />
+                <div className="h-3 w-2/3 rounded bg-neutral-800" />
+                <div className="h-3 w-1/2 rounded bg-neutral-800" />
+                <div className="h-3 w-1/3 rounded bg-neutral-800" />
+              </div>
+            )}
+            {saleState.ok && !saleState.loading && (
               <div className="mt-3 space-y-1">
                 <div>
                   VIN: <a className="underline" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">{VIN_ADDRESS}</a>
