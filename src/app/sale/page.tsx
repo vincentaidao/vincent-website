@@ -1,7 +1,7 @@
 const SALE_CONFIG = {
   network: "Sepolia (11155111)",
   vinToken: "0xD0372b3d77A17A0aDB9A39A255A996639Dc9a3Ca",
-  saleContract: "0xBeaC44C99eCC13736cb9b5eC3F6a073079fc1E7f",
+  saleContract: "0x75a3150F5685B69E4BEAA228a22F78087bc0c28c",
   capEth: 0.001,
   vinPerEth: 6_000_000,
 };
