@@ -7,6 +7,7 @@ const VIN_ADDRESS = "0x7fC4289A80d2cF44861f3DaFBe01125B93B5088D";
 const SALE_ADDRESS = "0xD8e01065780E96677962F1C96B49A14E1f855B37";
 const EXPLORER = "https://sepolia.etherscan.io/address/";
 const RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
+const IS_FALLBACK_RPC = RPC_URL === "https://rpc.sepolia.org";
 const SALE_ABI = [
   "function totalRaised() view returns (uint256)",
   "function totalCapWei() view returns (uint256)",
@@ -17,6 +18,8 @@ type SaleState = {
   totalRaisedWei: bigint;
   capWei: bigint;
   finalized: boolean;
+  ok: boolean;
+  errorMessage?: string;
 };
 
 async function fetchSaleState(): Promise<SaleState> {
@@ -32,10 +35,17 @@ async function fetchSaleState(): Promise<SaleState> {
       totalRaisedWei: BigInt(totalRaised),
       capWei: BigInt(cap),
       finalized: Boolean(finalized),
+      ok: true,
     };
   } catch (error) {
     console.error("Sale status read failed", error);
-    return { totalRaisedWei: BigInt(0), capWei: BigInt(0), finalized: false };
+    return {
+      totalRaisedWei: BigInt(0),
+      capWei: BigInt(0),
+      finalized: false,
+      ok: false,
+      errorMessage: "RPC error",
+    };
   }
 }
 
@@ -52,6 +62,7 @@ export default function Home() {
     totalRaisedWei: BigInt(0),
     capWei: BigInt(0),
     finalized: false,
+    ok: true,
   });
 
   const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
@@ -122,18 +133,28 @@ export default function Home() {
 
           <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 text-sm text-neutral-100">
             <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Sale status (read-only)</div>
-            <div className="mt-3 space-y-1">
-              <div>
-                VIN: <a className="underline" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">{VIN_ADDRESS}</a>
+            {IS_FALLBACK_RPC && (
+              <div className="mt-2 text-xs text-amber-300">
+                Using fallback RPC (set NEXT_PUBLIC_SEPOLIA_RPC_URL to an Infura Sepolia URL in Vercel).
               </div>
-              <div>
-                Sale: <a className="underline" href={`${EXPLORER}${SALE_ADDRESS}`} target="_blank" rel="noreferrer">{SALE_ADDRESS}</a>
+            )}
+            {!saleState.ok && (
+              <div className="mt-3 text-sm text-amber-200">Status unavailable (RPC error)</div>
+            )}
+            {saleState.ok && (
+              <div className="mt-3 space-y-1">
+                <div>
+                  VIN: <a className="underline" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">{VIN_ADDRESS}</a>
+                </div>
+                <div>
+                  Sale: <a className="underline" href={`${EXPLORER}${SALE_ADDRESS}`} target="_blank" rel="noreferrer">{SALE_ADDRESS}</a>
+                </div>
+                <div>Cap: {formatEthFixed(saleState.capWei)} ETH</div>
+                <div>Raised: {formatEthFixed(saleState.totalRaisedWei)} ETH</div>
+                <div>Remaining: {formatEthFixed(remainingWei)} ETH</div>
+                <div>Status: {status}</div>
               </div>
-              <div>Cap: {formatEthFixed(saleState.capWei)} ETH</div>
-              <div>Raised: {formatEthFixed(saleState.totalRaisedWei)} ETH</div>
-              <div>Remaining: {formatEthFixed(remainingWei)} ETH</div>
-              <div>Status: {status}</div>
-            </div>
+            )}
           </div>
         </main>
       </div>
