@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Copy } from "lucide-react";
 import { ethers } from "ethers";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 
 const VIN_ADDRESS = "0xb3186210A6f958DD1f59aA661B04C99cbEC5d85D";
 const SALE_ADDRESS = "0x20102C4daF3FbE98fF5b761Bff3f7B58726FC8a5";
@@ -152,11 +151,7 @@ export default function Home() {
 
           <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
             <CardHeader className="space-y-1">
-              <div className="flex items-center justify-between">
-                <CardTitle>Sepolia $VIN Sale</CardTitle>
-                <Badge>{status}</Badge>
-              </div>
-              <CardDescription>On-chain sale status</CardDescription>
+              <CardTitle>Sepolia $VIN Sale</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {IS_FALLBACK_RPC && (
@@ -191,14 +186,14 @@ export default function Home() {
                         </a>
                         <Button
                           variant="outline"
-                          className="h-7 px-2 text-xs"
+                          className="h-7 w-7 p-0"
                           type="button"
                           aria-label="Copy $VIN address"
                           onClick={() => handleCopy(VIN_ADDRESS, "vin")}
                         >
                           <Copy className="h-3.5 w-3.5" />
-                          {copied === "vin" ? "Copied" : "Copy"}
                         </Button>
+                        {copied === "vin" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
                     </div>
                     <div>
@@ -209,14 +204,14 @@ export default function Home() {
                         </a>
                         <Button
                           variant="outline"
-                          className="h-7 px-2 text-xs"
+                          className="h-7 w-7 p-0"
                           type="button"
                           aria-label="Copy sale address"
                           onClick={() => handleCopy(SALE_ADDRESS, "sale")}
                         >
                           <Copy className="h-3.5 w-3.5" />
-                          {copied === "sale" ? "Copied" : "Copy"}
                         </Button>
+                        {copied === "sale" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
                     </div>
                   </div>
