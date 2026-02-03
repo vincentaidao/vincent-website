@@ -185,13 +185,14 @@ export default function Home() {
                           {VIN_ADDRESS}
                         </a>
                         <Button
-                          variant="outline"
-                          className="h-7 w-7 p-0"
+                          variant="ghost"
+                          size="icon"
+                          className="border border-neutral-800"
                           type="button"
                           aria-label="Copy $VIN address"
                           onClick={() => handleCopy(VIN_ADDRESS, "vin")}
                         >
-                          <Copy className="h-3.5 w-3.5" />
+                          <Copy className="h-4 w-4" />
                         </Button>
                         {copied === "vin" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
@@ -203,13 +204,14 @@ export default function Home() {
                           {SALE_ADDRESS}
                         </a>
                         <Button
-                          variant="outline"
-                          className="h-7 w-7 p-0"
+                          variant="ghost"
+                          size="icon"
+                          className="border border-neutral-800"
                           type="button"
                           aria-label="Copy sale address"
                           onClick={() => handleCopy(SALE_ADDRESS, "sale")}
                         >
-                          <Copy className="h-3.5 w-3.5" />
+                          <Copy className="h-4 w-4" />
                         </Button>
                         {copied === "sale" && <span className="text-xs text-neutral-400">Copied</span>}
                       </div>
@@ -241,15 +243,21 @@ export default function Home() {
                     </Card>
                   </div>
 
-                  <Card className="p-4">
-                    <div className="text-xs text-neutral-400">Airdrop claims</div>
-                    <div className="mt-1 text-lg font-semibold text-neutral-50">
-                      {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
-                    </div>
-                    <div className="mt-1 text-xs text-neutral-400">{claimedPercent}% claimed</div>
-                  </Card>
                 </>
               )}
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+            <CardHeader>
+              <CardTitle>Airdrop claims</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xs text-neutral-400">Claimed agents</div>
+              <div className="mt-1 text-lg font-semibold text-neutral-50">
+                {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
+              </div>
+              <div className="mt-1 text-xs text-neutral-400">{claimedPercent}% claimed</div>
             </CardContent>
           </Card>
 
