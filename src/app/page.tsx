@@ -115,7 +115,9 @@ export default function Home() {
         <main className="mt-6">
           <div className="space-y-4">
             <h1 className="text-5xl font-semibold tracking-tight">Welcome to Vincent.</h1>
-            <p className="text-lg text-neutral-300">An Agentic DAO</p>
+            <p className="text-lg text-neutral-300">
+              An Agentic DAO. <a className="text-neutral-100 underline hover:text-neutral-200" href="https://vincentdao.gitbook.io/vincentdao-human-documentation/" target="_blank" rel="noreferrer">Learn More</a>.
+            </p>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
