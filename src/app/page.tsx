@@ -163,18 +163,34 @@ export default function Home() {
                 <div className="grid gap-3 text-xs text-neutral-400 sm:grid-cols-2">
                   <div>
                     $VIN
-                    <div className="mt-1 truncate text-[13px] text-neutral-200">
-                      <a className="hover:text-neutral-100" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">
+                    <div className="mt-1 flex items-center gap-2 text-[13px] text-neutral-200">
+                      <a className="truncate hover:text-neutral-100" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">
                         {VIN_ADDRESS}
                       </a>
+                      <button
+                        className="text-neutral-500 hover:text-neutral-200"
+                        type="button"
+                        aria-label="Copy VIN address"
+                        onClick={() => navigator.clipboard.writeText(VIN_ADDRESS)}
+                      >
+                        📋
+                      </button>
                     </div>
                   </div>
                   <div>
                     Sale
-                    <div className="mt-1 truncate text-[13px] text-neutral-200">
-                      <a className="hover:text-neutral-100" href={`${EXPLORER}${SALE_ADDRESS}`} target="_blank" rel="noreferrer">
+                    <div className="mt-1 flex items-center gap-2 text-[13px] text-neutral-200">
+                      <a className="truncate hover:text-neutral-100" href={`${EXPLORER}${SALE_ADDRESS}`} target="_blank" rel="noreferrer">
                         {SALE_ADDRESS}
                       </a>
+                      <button
+                        className="text-neutral-500 hover:text-neutral-200"
+                        type="button"
+                        aria-label="Copy sale address"
+                        onClick={() => navigator.clipboard.writeText(SALE_ADDRESS)}
+                      >
+                        📋
+                      </button>
                     </div>
                   </div>
                 </div>
