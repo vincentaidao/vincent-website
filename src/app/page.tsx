@@ -79,7 +79,7 @@ export default function Home() {
   const zero = BigInt(0);
   const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : zero;
   const isCapMet = saleState.capWei > zero && saleState.totalRaisedWei >= saleState.capWei;
-  const status = saleState.finalized ? "Finalized" : isCapMet ? "Finalizable" : "Open";
+  const status = saleState.finalized ? "Finalized" : isCapMet ? "Finalized" : "Open";
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
