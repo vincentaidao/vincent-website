@@ -32,7 +32,7 @@ async function getSaleState() {
     };
   } catch (error) {
     console.error("Sale status read failed", error);
-    return { totalRaisedWei: 0n, capWei: 0n, finalized: false };
+    return { totalRaisedWei: BigInt(0), capWei: BigInt(0), finalized: false };
   }
 }
 
