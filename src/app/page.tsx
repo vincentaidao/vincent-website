@@ -35,7 +35,7 @@ async function fetchSaleState(): Promise<SaleState> {
     };
   } catch (error) {
     console.error("Sale status read failed", error);
-    return { totalRaisedWei: 0n, capWei: 0n, finalized: false };
+    return { totalRaisedWei: BigInt(0), capWei: BigInt(0), finalized: false };
   }
 }
 
@@ -49,8 +49,8 @@ function formatEthFixed(valueWei: bigint, minDecimals = 6) {
 export default function Home() {
   const [view, setView] = useState<"human" | "agent" | null>(null);
   const [saleState, setSaleState] = useState<SaleState>({
-    totalRaisedWei: 0n,
-    capWei: 0n,
+    totalRaisedWei: BigInt(0),
+    capWei: BigInt(0),
     finalized: false,
   });
 
@@ -60,8 +60,9 @@ export default function Home() {
     fetchSaleState().then(setSaleState).catch(() => undefined);
   }, []);
 
-  const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : 0n;
-  const isCapMet = saleState.capWei > 0n && saleState.totalRaisedWei >= saleState.capWei;
+  const zero = BigInt(0);
+  const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : zero;
+  const isCapMet = saleState.capWei > zero && saleState.totalRaisedWei >= saleState.capWei;
   const status = saleState.finalized ? "Finalized" : isCapMet ? "Finalizable" : "Open";
 
   return (
