@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
 
-const VIN_ADDRESS = "0x4eeB76A8C0E553A909409Bbc3D4401c31d1F3924";
-const SALE_ADDRESS = "0x80861A4770809F18F10E7c44A70973EC0DCE4106";
+const VIN_ADDRESS = "0xCb1bd09bD5167EBFc2c6d8c49523434Ca8ba2304";
+const SALE_ADDRESS = "0x58FD33D769EF50aa4898E993eC10dd61a51e701a";
 const EXPLORER = "https://sepolia.etherscan.io/address/";
 const RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
 const IS_FALLBACK_RPC = RPC_URL === "https://rpc.sepolia.org";
