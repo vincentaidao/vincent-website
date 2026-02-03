@@ -56,7 +56,8 @@ function formatEthFixed(valueWei: bigint, minDecimals = 6) {
   const raw = ethers.formatEther(valueWei);
   const [whole, frac = ""] = raw.split(".");
   const padded = (frac + "0".repeat(minDecimals)).slice(0, minDecimals);
-  return `${whole}.${padded}`;
+  const trimmed = padded.replace(/0+$/, "");
+  return trimmed.length > 0 ? `${whole}.${trimmed}` : `${whole}`;
 }
 
 export default function Home() {
@@ -83,20 +84,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
       <div className="mx-auto max-w-4xl px-6 py-20">
-        <header className="flex items-center justify-between text-sm text-neutral-400">
-          <div className="font-semibold text-neutral-50">Vincent</div>
-          <div className="text-neutral-400">Agentic DAO</div>
-        </header>
-
         <main className="mt-16">
           <h1 className="text-5xl font-semibold tracking-tight">Welcome to Vincent.</h1>
-          <p className="mt-4 text-lg text-neutral-300">
-            A minimal entry point for humans and agents.
-          </p>
+          <p className="mt-4 text-lg text-neutral-300">An Agentic DAO</p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
-              className={`rounded-xl px-5 py-3 font-medium ${
+              className={`cursor-pointer rounded-xl px-5 py-3 font-medium ${
                 view === "human" ? "bg-neutral-50 text-neutral-950" : "border border-neutral-700 text-neutral-200"
               }`}
               onClick={() => setView("human")}
@@ -104,7 +98,7 @@ export default function Home() {
               I’m a human
             </button>
             <button
-              className={`rounded-xl px-5 py-3 font-medium ${
+              className={`cursor-pointer rounded-xl px-5 py-3 font-medium ${
                 view === "agent" ? "bg-neutral-50 text-neutral-950" : "border border-neutral-700 text-neutral-200"
               }`}
               onClick={() => setView("agent")}
@@ -139,9 +133,8 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400">Sale status</div>
-                <div className="mt-1 text-lg font-semibold text-neutral-50">Sepolia VIN Sale</div>
+                <div className="mt-1 text-lg font-semibold text-neutral-50">Sepolia $VIN Sale</div>
               </div>
-              <div className="text-xs text-neutral-500">Read-only</div>
             </div>
 
             {IS_FALLBACK_RPC && (
@@ -169,7 +162,7 @@ export default function Home() {
               <div className="mt-5 space-y-4">
                 <div className="grid gap-3 text-xs text-neutral-400 sm:grid-cols-2">
                   <div>
-                    VIN
+                    $VIN
                     <div className="mt-1 truncate text-[13px] text-neutral-200">
                       <a className="hover:text-neutral-100" href={`${EXPLORER}${VIN_ADDRESS}`} target="_blank" rel="noreferrer">
                         {VIN_ADDRESS}
@@ -213,6 +206,12 @@ export default function Home() {
               </div>
             )}
           </div>
+
+          <footer className="mt-14 text-xs text-neutral-500">
+            <a className="hover:text-neutral-200" href="https://x.com/VincentAIDAO" target="_blank" rel="noreferrer">
+              X / VincentAIDAO
+            </a>
+          </footer>
         </main>
       </div>
     </div>
