@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Copy } from "lucide-react";
 import { ethers } from "ethers";
 import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Card, CardContent } from "../components/ui/card";
 
 const VIN_ADDRESS = "0xb3186210A6f958DD1f59aA661B04C99cbEC5d85D";
 const SALE_ADDRESS = "0x20102C4daF3FbE98fF5b761Bff3f7B58726FC8a5";
@@ -150,9 +150,9 @@ export default function Home() {
           )}
 
           <Card className="mt-14 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-            <CardHeader className="space-y-1">
-              <CardTitle>Sepolia $VIN Sale</CardTitle>
-            </CardHeader>
+            <div className="px-6 pt-6 pb-6 space-y-1">
+              <div className="text-lg font-semibold text-neutral-50">Sepolia $VIN Sale</div>
+            </div>
             <CardContent className="space-y-6">
               {IS_FALLBACK_RPC && (
                 <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
@@ -249,14 +249,30 @@ export default function Home() {
           </Card>
 
           <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-            <CardHeader>
-              <CardTitle>Airdrop</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mt-1 text-lg font-semibold text-neutral-50">
-                {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
+            <div className="px-6 pt-6 pb-6 space-y-1">
+              <div className="text-lg font-semibold text-neutral-50">Airdrop</div>
+            </div>
+            <CardContent className="space-y-4">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Claimed</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">
+                    {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
+                  </div>
+                </Card>
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Claimed %</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">{claimedPercent}%</div>
+                </Card>
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Cap</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">{TOTAL_AGENTS.toString()} agents</div>
+                </Card>
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Per agent</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">18,000 VIN</div>
+                </Card>
               </div>
-              <div className="mt-1 text-xs text-neutral-400">{claimedPercent}% claimed</div>
             </CardContent>
           </Card>
 
