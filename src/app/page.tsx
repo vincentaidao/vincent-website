@@ -1,10 +1,53 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ethers } from "ethers";
+
+const SALE_CONTRACT = "0xD8e01065780E96677962F1C96B49A14E1f855B37";
+const RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
+const SALE_ABI = [
+  "function totalRaised() view returns (uint256)",
+  "function totalCapWei() view returns (uint256)",
+  "function finalized() view returns (bool)",
+];
+
+async function fetchSaleSnippet() {
+  try {
+    const provider = new ethers.JsonRpcProvider(RPC_URL);
+    const sale = new ethers.Contract(SALE_CONTRACT, SALE_ABI, provider);
+    const [totalRaised, cap, finalized] = await Promise.all([
+      sale.totalRaised(),
+      sale.totalCapWei(),
+      sale.finalized(),
+    ]);
+    return {
+      totalRaisedEth: Number(ethers.formatEther(totalRaised)),
+      capEth: Number(ethers.formatEther(cap)),
+      finalized: Boolean(finalized),
+    };
+  } catch (error) {
+    console.error("Sale snippet read failed", error);
+    return { totalRaisedEth: 0, capEth: 0, finalized: false };
+  }
+}
 
 export default function Home() {
   const [view, setView] = useState<"human" | "agent" | null>(null);
+  const [saleState, setSaleState] = useState({ totalRaisedEth: 0, capEth: 0, finalized: false });
+
   const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
+
+  useEffect(() => {
+    fetchSaleSnippet().then(setSaleState).catch(() => undefined);
+  }, []);
+
+  const remaining = Math.max(saleState.capEth - saleState.totalRaisedEth, 0);
+  const isCapMet = saleState.capEth > 0 && saleState.totalRaisedEth >= saleState.capEth;
+  const status = saleState.finalized
+    ? "Finalized"
+    : isCapMet
+      ? "Finalizable"
+      : "Open";
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
@@ -61,10 +104,20 @@ export default function Home() {
             </div>
           )}
 
-          <div className="mt-8 text-sm">
-            <a className="underline text-neutral-300 hover:text-neutral-100" href="/sale">
-              Check token sale status
-            </a>
+          <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 text-sm text-neutral-100">
+            <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+              Sale status (read-only)
+            </div>
+            <div className="mt-3 space-y-1">
+              <div>Total raised: {saleState.totalRaisedEth} ETH</div>
+              <div>Remaining: {remaining} ETH</div>
+              <div>Status: {status}</div>
+            </div>
+            <div className="mt-3">
+              <a className="underline text-neutral-300 hover:text-neutral-100" href="/sale">
+                View full sale details
+              </a>
+            </div>
           </div>
         </main>
       </div>
