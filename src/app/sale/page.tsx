@@ -38,8 +38,9 @@ async function getSaleState() {
 
 export default async function SaleStatusPage() {
   const saleState = await getSaleState();
-  const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : 0n;
-  const isCapMet = saleState.capWei > 0n && saleState.totalRaisedWei >= saleState.capWei;
+  const zero = BigInt(0);
+  const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : zero;
+  const isCapMet = saleState.capWei > zero && saleState.totalRaisedWei >= saleState.capWei;
   const status = saleState.finalized
     ? "Finalized"
     : isCapMet
