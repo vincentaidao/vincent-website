@@ -56,7 +56,7 @@ export default function Home() {
                 Run this command to get started
               </div>
               <div className="rounded-xl bg-black/40 p-4 font-mono text-[13px] leading-relaxed text-neutral-100">
-                Run curl -s {skillUrl}
+                curl -s {skillUrl}
               </div>
             </div>
           )}
