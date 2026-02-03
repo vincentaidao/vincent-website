@@ -18,12 +18,18 @@ const SALE_ABI = [
   "function finalized() view returns (bool)",
 ];
 
+const AIRDROP_ADDRESS = "0xA52423A5394fCDF4a4E88F3bc3EB423BA69bC494";
+const AIRDROP_ABI = ["function totalClaimedVin() view returns (uint256)"];
+const CLAIM_AMOUNT = 18_000n * 10n ** 18n;
+const TOTAL_AGENTS = 25000n;
+
 type SaleState = {
   totalRaisedWei: bigint;
   capWei: bigint;
   finalized: boolean;
   ok: boolean;
   loading: boolean;
+  totalClaimedVin?: bigint;
   errorMessage?: string;
 };
 
@@ -31,10 +37,12 @@ async function fetchSaleState(): Promise<SaleState> {
   try {
     const provider = new ethers.JsonRpcProvider(RPC_URL);
     const sale = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
-    const [totalRaised, cap, finalized] = await Promise.all([
+    const airdrop = new ethers.Contract(AIRDROP_ADDRESS, AIRDROP_ABI, provider);
+    const [totalRaised, cap, finalized, totalClaimedVin] = await Promise.all([
       sale.totalRaised(),
       sale.totalCapWei(),
       sale.finalized(),
+      airdrop.totalClaimedVin(),
     ]);
     return {
       totalRaisedWei: BigInt(totalRaised),
@@ -42,7 +50,8 @@ async function fetchSaleState(): Promise<SaleState> {
       finalized: Boolean(finalized),
       ok: true,
       loading: false,
-    };
+      totalClaimedVin: BigInt(totalClaimedVin),
+    } as SaleState;
   } catch (error) {
     console.error("Sale status read failed", error);
     return {
@@ -52,7 +61,8 @@ async function fetchSaleState(): Promise<SaleState> {
       ok: false,
       loading: false,
       errorMessage: "RPC error",
-    };
+      totalClaimedVin: 0n,
+    } as SaleState;
   }
 }
 
@@ -72,6 +82,7 @@ export default function Home() {
     finalized: false,
     ok: true,
     loading: true,
+    totalClaimedVin: 0n,
   });
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -85,6 +96,9 @@ export default function Home() {
   const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : zero;
   const isCapMet = saleState.capWei > zero && saleState.totalRaisedWei >= saleState.capWei;
   const status = saleState.finalized ? "Finalized" : isCapMet ? "Finalized" : "Open";
+
+  const claimedAgents = saleState.totalClaimedVin ? saleState.totalClaimedVin / CLAIM_AMOUNT : 0n;
+  const claimedPercent = TOTAL_AGENTS > 0n ? Number((claimedAgents * 10000n) / TOTAL_AGENTS) / 100 : 0;
 
   const handleCopy = async (value: string, key: string) => {
     try {
@@ -231,6 +245,14 @@ export default function Home() {
                       <div className="mt-1 text-lg font-semibold text-neutral-50">{status}</div>
                     </Card>
                   </div>
+
+                  <Card className="p-4">
+                    <div className="text-xs text-neutral-400">Airdrop claims</div>
+                    <div className="mt-1 text-lg font-semibold text-neutral-50">
+                      {claimedAgents.toString()} / {TOTAL_AGENTS.toString()} agents
+                    </div>
+                    <div className="mt-1 text-xs text-neutral-400">{claimedPercent}% claimed</div>
+                  </Card>
                 </>
               )}
             </CardContent>
