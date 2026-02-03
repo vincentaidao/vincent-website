@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Copy } from "lucide-react";
 import { ethers } from "ethers";
 
-const VIN_ADDRESS = "0xCb1bd09bD5167EBFc2c6d8c49523434Ca8ba2304";
-const SALE_ADDRESS = "0x58FD33D769EF50aa4898E993eC10dd61a51e701a";
+const VIN_ADDRESS = "0xb3186210A6f958DD1f59aA661B04C99cbEC5d85D";
+const SALE_ADDRESS = "0x20102C4daF3FbE98fF5b761Bff3f7B58726FC8a5";
 const EXPLORER = "https://sepolia.etherscan.io/address/";
 const RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
 const IS_FALLBACK_RPC = RPC_URL === "https://rpc.sepolia.org";
