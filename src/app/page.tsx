@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Copy } from "lucide-react";
 import { ethers } from "ethers";
 
 const VIN_ADDRESS = "0xCb1bd09bD5167EBFc2c6d8c49523434Ca8ba2304";
@@ -69,6 +70,7 @@ export default function Home() {
     ok: true,
     loading: true,
   });
+  const [copied, setCopied] = useState<string | null>(null);
 
   const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
 
@@ -80,6 +82,16 @@ export default function Home() {
   const remainingWei = saleState.capWei > saleState.totalRaisedWei ? saleState.capWei - saleState.totalRaisedWei : zero;
   const isCapMet = saleState.capWei > zero && saleState.totalRaisedWei >= saleState.capWei;
   const status = saleState.finalized ? "Finalized" : isCapMet ? "Finalized" : "Open";
+
+  const handleCopy = async (value: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(key);
+      setTimeout(() => setCopied((prev) => (prev === key ? null : prev)), 1200);
+    } catch (error) {
+      console.error("Copy failed", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
@@ -168,12 +180,13 @@ export default function Home() {
                         {VIN_ADDRESS}
                       </a>
                       <button
-                        className="text-neutral-500 hover:text-neutral-200"
+                        className="inline-flex items-center gap-1 rounded-md border border-neutral-800 bg-neutral-900 px-2 py-1 text-xs text-neutral-300 transition hover:border-neutral-700 hover:text-neutral-100"
                         type="button"
-                        aria-label="Copy VIN address"
-                        onClick={() => navigator.clipboard.writeText(VIN_ADDRESS)}
+                        aria-label="Copy $VIN address"
+                        onClick={() => handleCopy(VIN_ADDRESS, "vin")}
                       >
-                        📋
+                        <Copy className="h-3.5 w-3.5" />
+                        {copied === "vin" ? "Copied" : "Copy"}
                       </button>
                     </div>
                   </div>
@@ -184,12 +197,13 @@ export default function Home() {
                         {SALE_ADDRESS}
                       </a>
                       <button
-                        className="text-neutral-500 hover:text-neutral-200"
+                        className="inline-flex items-center gap-1 rounded-md border border-neutral-800 bg-neutral-900 px-2 py-1 text-xs text-neutral-300 transition hover:border-neutral-700 hover:text-neutral-100"
                         type="button"
                         aria-label="Copy sale address"
-                        onClick={() => navigator.clipboard.writeText(SALE_ADDRESS)}
+                        onClick={() => handleCopy(SALE_ADDRESS, "sale")}
                       >
-                        📋
+                        <Copy className="h-3.5 w-3.5" />
+                        {copied === "sale" ? "Copied" : "Copy"}
                       </button>
                     </div>
                   </div>
