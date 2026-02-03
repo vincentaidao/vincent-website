@@ -38,7 +38,7 @@ export default function CopyButton({
       aria-label={ariaLabel}
       onClick={handleCopy}
     >
-      {copied ? <Check className="h-4 w-4 text-emerald-300" /> : <Copy className="h-4 w-4 text-neutral-200" />}
+      {copied ? <Check color="#5ee9b5" className="h-4 w-4" /> : <Copy color="#e5e5e5" className="h-4 w-4" />}
     </Button>
   );
 }
