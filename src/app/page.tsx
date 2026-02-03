@@ -83,8 +83,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-50">
-      <div className="mx-auto max-w-4xl px-6 py-20">
-        <main className="mt-16">
+      <div className="mx-auto max-w-4xl px-6 py-12">
+        <main className="mt-6">
           <h1 className="text-5xl font-semibold tracking-tight">Welcome to Vincent.</h1>
           <p className="mt-4 text-lg text-neutral-300">An Agentic DAO</p>
 
