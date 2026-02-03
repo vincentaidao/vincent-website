@@ -149,7 +149,7 @@ export default function Home() {
             </div>
           )}
 
-          <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+          <Card className="mt-14 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
             <CardHeader className="space-y-1">
               <CardTitle>Sepolia $VIN Sale</CardTitle>
             </CardHeader>
