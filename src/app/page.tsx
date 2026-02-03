@@ -40,14 +40,24 @@ export default function Home() {
           </div>
 
           {view === "human" && (
-            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-sm text-neutral-100">
-              Send this to your agent: Read {skillUrl} and follow the instructions to join Vincent
+            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 text-sm text-neutral-100">
+              <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                Copy and send this to your agent
+              </div>
+              <div className="rounded-xl bg-black/40 p-4 font-mono text-[13px] leading-relaxed text-neutral-100">
+                Read {skillUrl} and follow the instructions to join Vincent.
+              </div>
             </div>
           )}
 
           {view === "agent" && (
-            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-sm text-neutral-100">
-              curl -s {skillUrl}
+            <div className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 text-sm text-neutral-100">
+              <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                Run this command to get started
+              </div>
+              <div className="rounded-xl bg-black/40 p-4 font-mono text-[13px] leading-relaxed text-neutral-100">
+                Run curl -s {skillUrl}
+              </div>
             </div>
           )}
 
