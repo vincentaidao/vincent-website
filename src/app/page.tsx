@@ -37,15 +37,20 @@ type SaleState = {
   claimEndBlock?: bigint;
   claimEnabled?: boolean;
   currentBlock?: bigint;
+  chainId?: bigint;
+  rpcHost?: string;
   errorMessage?: string;
 };
 
 async function fetchSaleState(): Promise<SaleState> {
-  try {
-    const provider = new ethers.JsonRpcProvider(RPC_URL);
+  const primaryUrl = RPC_URL;
+  const fallbackUrl = "https://rpc.sepolia.org";
+
+  const loadFromProvider = async (url: string): Promise<SaleState> => {
+    const provider = new ethers.JsonRpcProvider(url);
     const sale = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
     const airdrop = new ethers.Contract(AIRDROP_ADDRESS, AIRDROP_ABI, provider);
-    const [totalRaised, cap, finalized, totalClaimedVin, claimEndBlock, claimEnabled, currentBlock] = await Promise.all([
+    const [totalRaised, cap, finalized, totalClaimedVin, claimEndBlock, claimEnabled, currentBlock, network] = await Promise.all([
       sale.totalRaised(),
       sale.totalCapWei(),
       sale.finalized(),
@@ -53,7 +58,9 @@ async function fetchSaleState(): Promise<SaleState> {
       airdrop.claimEndBlock(),
       airdrop.claimEnabled(),
       provider.getBlockNumber(),
+      provider.getNetwork(),
     ]);
+
     return {
       totalRaisedWei: BigInt(totalRaised),
       capWei: BigInt(cap),
@@ -64,9 +71,22 @@ async function fetchSaleState(): Promise<SaleState> {
       claimEndBlock: BigInt(claimEndBlock),
       claimEnabled: Boolean(claimEnabled),
       currentBlock: BigInt(currentBlock),
+      chainId: BigInt(network.chainId),
+      rpcHost: new URL(url).host,
     } as SaleState;
+  };
+
+  try {
+    return await loadFromProvider(primaryUrl);
   } catch (error) {
     console.error("Sale status read failed", error);
+    if (primaryUrl !== fallbackUrl) {
+      try {
+        return await loadFromProvider(fallbackUrl);
+      } catch (fallbackError) {
+        console.error("Fallback RPC failed", fallbackError);
+      }
+    }
     return {
       totalRaisedWei: BigInt(0),
       capWei: BigInt(0),
@@ -78,6 +98,8 @@ async function fetchSaleState(): Promise<SaleState> {
       claimEndBlock: 0n,
       claimEnabled: false,
       currentBlock: 0n,
+      chainId: 0n,
+      rpcHost: undefined,
     } as SaleState;
   }
 }
@@ -183,9 +205,13 @@ export default function Home() {
             <CardContent className="space-y-6">
               {IS_FALLBACK_RPC && (
                 <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
-                  Using fallback RPC. Set NEXT_PUBLIC_SEPOLIA_RPC_URL to an Infura Sepolia URL in Vercel.
+                  Using fallback RPC. Set NEXT_PUBLIC_SEPOLIA_RPC_URL to a stable Sepolia RPC in Vercel.
                 </div>
               )}
+
+              <div className="rounded-xl border border-neutral-800 bg-neutral-950/60 px-3 py-2 text-xs text-neutral-300">
+                RPC: {saleState.rpcHost || new URL(RPC_URL).host} · ChainId: {saleState.chainId?.toString() || "?"} · Block: {saleState.currentBlock?.toString() || "?"}
+              </div>
 
               {!saleState.ok && !saleState.loading && (
                 <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
