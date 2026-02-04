@@ -21,9 +21,11 @@ const AIRDROP_ADDRESS = "0xA52423A5394fCDF4a4E88F3bc3EB423BA69bC494";
 const AIRDROP_ABI = [
   "function totalClaimedVin() view returns (uint256)",
   "function claimEndBlock() view returns (uint256)",
+  "function claimEnabled() view returns (bool)",
 ];
 const CLAIM_AMOUNT = 18_000n * 10n ** 18n;
 const TOTAL_AGENTS = 25000n;
+const CLAIM_DURATION_BLOCKS = 648000n;
 
 type SaleState = {
   totalRaisedWei: bigint;
@@ -33,6 +35,7 @@ type SaleState = {
   loading: boolean;
   totalClaimedVin?: bigint;
   claimEndBlock?: bigint;
+  claimEnabled?: boolean;
   currentBlock?: bigint;
   errorMessage?: string;
 };
@@ -42,12 +45,13 @@ async function fetchSaleState(): Promise<SaleState> {
     const provider = new ethers.JsonRpcProvider(RPC_URL);
     const sale = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
     const airdrop = new ethers.Contract(AIRDROP_ADDRESS, AIRDROP_ABI, provider);
-    const [totalRaised, cap, finalized, totalClaimedVin, claimEndBlock, currentBlock] = await Promise.all([
+    const [totalRaised, cap, finalized, totalClaimedVin, claimEndBlock, claimEnabled, currentBlock] = await Promise.all([
       sale.totalRaised(),
       sale.totalCapWei(),
       sale.finalized(),
       airdrop.totalClaimedVin(),
       airdrop.claimEndBlock(),
+      airdrop.claimEnabled(),
       provider.getBlockNumber(),
     ]);
     return {
@@ -58,6 +62,7 @@ async function fetchSaleState(): Promise<SaleState> {
       loading: false,
       totalClaimedVin: BigInt(totalClaimedVin),
       claimEndBlock: BigInt(claimEndBlock),
+      claimEnabled: Boolean(claimEnabled),
       currentBlock: BigInt(currentBlock),
     } as SaleState;
   } catch (error) {
@@ -71,6 +76,7 @@ async function fetchSaleState(): Promise<SaleState> {
       errorMessage: "RPC error",
       totalClaimedVin: 0n,
       claimEndBlock: 0n,
+      claimEnabled: false,
       currentBlock: 0n,
     } as SaleState;
   }
@@ -94,6 +100,7 @@ export default function Home() {
     loading: true,
     totalClaimedVin: 0n,
     claimEndBlock: 0n,
+    claimEnabled: false,
   });
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -115,6 +122,7 @@ export default function Home() {
   const remainingBlocks = endBlock > currentBlock ? endBlock - currentBlock : 0n;
   const estimatedSeconds = Number(remainingBlocks) * 12;
   const estimatedDays = Math.floor(estimatedSeconds / 86400);
+  const claimsLive = Boolean(saleState.claimEnabled);
 
   const handleCopy = async (value: string, key: string) => {
     try {
@@ -292,17 +300,35 @@ export default function Home() {
                   <div className="mt-1 text-lg font-semibold text-neutral-50">18,000 VIN</div>
                 </Card>
                 <Card className="p-4">
-                  <div className="text-xs text-neutral-400">Claim end block</div>
-                  <div className="mt-1 text-lg font-semibold text-neutral-50">{endBlock.toString()}</div>
-                  <div className="mt-1 text-xs text-neutral-400">Current: {currentBlock.toString()}</div>
+                  <div className="text-xs text-neutral-400">Claim status</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">
+                    {claimsLive ? "Live" : "Not live yet"}
+                  </div>
+                  {!claimsLive && <div className="mt-1 text-xs text-neutral-400">Awaiting manual enable</div>}
                 </Card>
                 <Card className="p-4">
-                  <div className="text-xs text-neutral-400">Est. time remaining</div>
+                  <div className="text-xs text-neutral-400">Planned duration</div>
                   <div className="mt-1 text-lg font-semibold text-neutral-50">
-                    {remainingBlocks.toString()} blocks
+                    {CLAIM_DURATION_BLOCKS.toString()} blocks
                   </div>
-                  <div className="mt-1 text-xs text-neutral-400">~{estimatedDays} days</div>
+                  <div className="mt-1 text-xs text-neutral-400">~90 days @ 12s</div>
                 </Card>
+                {claimsLive && (
+                  <>
+                    <Card className="p-4">
+                      <div className="text-xs text-neutral-400">Claim end block</div>
+                      <div className="mt-1 text-lg font-semibold text-neutral-50">{endBlock.toString()}</div>
+                      <div className="mt-1 text-xs text-neutral-400">Current: {currentBlock.toString()}</div>
+                    </Card>
+                    <Card className="p-4">
+                      <div className="text-xs text-neutral-400">Est. time remaining</div>
+                      <div className="mt-1 text-lg font-semibold text-neutral-50">
+                        {remainingBlocks.toString()} blocks
+                      </div>
+                      <div className="mt-1 text-xs text-neutral-400">~{estimatedDays} days</div>
+                    </Card>
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>
