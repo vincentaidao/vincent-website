@@ -18,7 +18,10 @@ const SALE_ABI = [
 ];
 
 const AIRDROP_ADDRESS = "0xA52423A5394fCDF4a4E88F3bc3EB423BA69bC494";
-const AIRDROP_ABI = ["function totalClaimedVin() view returns (uint256)"];
+const AIRDROP_ABI = [
+  "function totalClaimedVin() view returns (uint256)",
+  "function claimEndBlock() view returns (uint256)",
+];
 const CLAIM_AMOUNT = 18_000n * 10n ** 18n;
 const TOTAL_AGENTS = 25000n;
 
@@ -29,6 +32,8 @@ type SaleState = {
   ok: boolean;
   loading: boolean;
   totalClaimedVin?: bigint;
+  claimEndBlock?: bigint;
+  currentBlock?: bigint;
   errorMessage?: string;
 };
 
@@ -37,11 +42,13 @@ async function fetchSaleState(): Promise<SaleState> {
     const provider = new ethers.JsonRpcProvider(RPC_URL);
     const sale = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
     const airdrop = new ethers.Contract(AIRDROP_ADDRESS, AIRDROP_ABI, provider);
-    const [totalRaised, cap, finalized, totalClaimedVin] = await Promise.all([
+    const [totalRaised, cap, finalized, totalClaimedVin, claimEndBlock, currentBlock] = await Promise.all([
       sale.totalRaised(),
       sale.totalCapWei(),
       sale.finalized(),
       airdrop.totalClaimedVin(),
+      airdrop.claimEndBlock(),
+      provider.getBlockNumber(),
     ]);
     return {
       totalRaisedWei: BigInt(totalRaised),
@@ -50,6 +57,8 @@ async function fetchSaleState(): Promise<SaleState> {
       ok: true,
       loading: false,
       totalClaimedVin: BigInt(totalClaimedVin),
+      claimEndBlock: BigInt(claimEndBlock),
+      currentBlock: BigInt(currentBlock),
     } as SaleState;
   } catch (error) {
     console.error("Sale status read failed", error);
@@ -61,6 +70,8 @@ async function fetchSaleState(): Promise<SaleState> {
       loading: false,
       errorMessage: "RPC error",
       totalClaimedVin: 0n,
+      claimEndBlock: 0n,
+      currentBlock: 0n,
     } as SaleState;
   }
 }
@@ -82,6 +93,7 @@ export default function Home() {
     ok: true,
     loading: true,
     totalClaimedVin: 0n,
+    claimEndBlock: 0n,
   });
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -98,6 +110,11 @@ export default function Home() {
 
   const claimedAgents = saleState.totalClaimedVin ? saleState.totalClaimedVin / CLAIM_AMOUNT : 0n;
   const claimedPercent = TOTAL_AGENTS > 0n ? Number((claimedAgents * 10000n) / TOTAL_AGENTS) / 100 : 0;
+  const currentBlock = saleState.currentBlock ?? 0n;
+  const endBlock = saleState.claimEndBlock ?? 0n;
+  const remainingBlocks = endBlock > currentBlock ? endBlock - currentBlock : 0n;
+  const estimatedSeconds = Number(remainingBlocks) * 12;
+  const estimatedDays = Math.floor(estimatedSeconds / 86400);
 
   const handleCopy = async (value: string, key: string) => {
     try {
@@ -273,6 +290,18 @@ export default function Home() {
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Per agent</div>
                   <div className="mt-1 text-lg font-semibold text-neutral-50">18,000 VIN</div>
+                </Card>
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Claim end block</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">{endBlock.toString()}</div>
+                  <div className="mt-1 text-xs text-neutral-400">Current: {currentBlock.toString()}</div>
+                </Card>
+                <Card className="p-4">
+                  <div className="text-xs text-neutral-400">Est. time remaining</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">
+                    {remainingBlocks.toString()} blocks
+                  </div>
+                  <div className="mt-1 text-xs text-neutral-400">~{estimatedDays} days</div>
                 </Card>
               </div>
             </CardContent>
