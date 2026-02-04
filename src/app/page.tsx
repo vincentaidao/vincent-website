@@ -6,8 +6,8 @@ import { ethers } from "ethers";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 
-const VIN_ADDRESS = "0xb3186210A6f958DD1f59aA661B04C99cbEC5d85D";
-const SALE_ADDRESS = "0x20102C4daF3FbE98fF5b761Bff3f7B58726FC8a5";
+const VIN_ADDRESS = "0x12362B19eef74f5c7dceC7D76b3AF16d568ff18E";
+const SALE_ADDRESS = "0xa91315a02D88F94bF399ed33F428bAe8e2f24F56";
 const EXPLORER = "https://sepolia.etherscan.io/address/";
 const RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
 const IS_FALLBACK_RPC = RPC_URL === "https://rpc.sepolia.org";
@@ -17,7 +17,7 @@ const SALE_ABI = [
   "function finalized() view returns (bool)",
 ];
 
-const AIRDROP_ADDRESS = "0xA52423A5394fCDF4a4E88F3bc3EB423BA69bC494";
+const AIRDROP_ADDRESS = "0x3851031C2eF0e388557C469db60AB25f78f9B3d1";
 const AIRDROP_ABI = [
   "function totalClaimedVin() view returns (uint256)",
   "function claimEndBlock() view returns (uint256)",
