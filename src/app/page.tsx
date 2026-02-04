@@ -23,7 +23,7 @@ const AIRDROP_ABI = [
   "function claimEndBlock() view returns (uint256)",
   "function claimEnabled() view returns (bool)",
 ];
-const CLAIM_AMOUNT = 18_000n * 10n ** 18n;
+const CLAIM_AMOUNT = 12_000n * 10n ** 18n;
 const TOTAL_AGENTS = 25000n;
 const CLAIM_DURATION_BLOCKS = 648000n;
 
@@ -303,7 +303,7 @@ export default function Home() {
 
           <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
             <div className="px-6 pt-6 pb-6 space-y-1">
-              <div className="text-lg font-semibold text-neutral-50">Airdrop</div>
+              <div className="text-lg font-semibold text-neutral-50">Agent Stimmy Drop</div>
             </div>
             <CardContent className="space-y-4">
               <div className="grid gap-3 sm:grid-cols-2">
@@ -323,14 +323,18 @@ export default function Home() {
                 </Card>
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Per agent</div>
-                  <div className="mt-1 text-lg font-semibold text-neutral-50">18,000 VIN</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">12,000 VIN</div>
                 </Card>
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Claim status</div>
                   <div className="mt-1 text-lg font-semibold text-neutral-50">
                     {claimsLive ? "Live" : "Not live yet"}
                   </div>
-                  {!claimsLive && <div className="mt-1 text-xs text-neutral-400">Awaiting manual enable</div>}
+                  {!claimsLive && (
+                    <div className="mt-1 text-xs text-neutral-400">
+                      Awaiting manual enable (~1 week after sell-out + LP live)
+                    </div>
+                  )}
                 </Card>
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Planned duration</div>
