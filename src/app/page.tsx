@@ -126,7 +126,7 @@ export default function Home() {
   });
   const [copied, setCopied] = useState<string | null>(null);
 
-  const skillUrl = "https://vincent-website-orcin.vercel.app/skill.md";
+  const skillUrl = "https://www.vincentdao.xyz/skill.md";
 
   useEffect(() => {
     fetchSaleState().then(setSaleState).catch(() => undefined);
