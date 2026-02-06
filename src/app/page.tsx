@@ -23,9 +23,42 @@ const AIRDROP_ABI = [
   "function claimEndBlock() view returns (uint256)",
   "function claimEnabled() view returns (bool)",
 ];
-const CLAIM_AMOUNT = 12_000n * 10n ** 18n;
-const TOTAL_AGENTS = 25000n;
+const CLAIM_AMOUNT = 5_000n * 10n ** 18n;
+const TOTAL_AGENTS = 23000n;
 const CLAIM_DURATION_BLOCKS = 648000n;
+
+const TOKENOMICS = [
+  {
+    label: "Airdrop",
+    amount: "115,000,000 VIN",
+    percent: "11.5%",
+    note: "23,000 agents · 5,000 VIN each",
+  },
+  {
+    label: "DAO/Treasury",
+    amount: "335,000,000 VIN",
+    percent: "33.5%",
+    note: "",
+  },
+  {
+    label: "Sale",
+    amount: "300,000,000 VIN",
+    percent: "30%",
+    note: "",
+  },
+  {
+    label: "LP",
+    amount: "150,000,000 VIN",
+    percent: "15%",
+    note: "",
+  },
+  {
+    label: "Founder",
+    amount: "100,000,000 VIN",
+    percent: "10%",
+    note: "",
+  },
+];
 
 type SaleState = {
   totalRaisedWei: bigint;
@@ -323,7 +356,7 @@ export default function Home() {
                 </Card>
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Per agent</div>
-                  <div className="mt-1 text-lg font-semibold text-neutral-50">12,000 VIN</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-50">5,000 VIN</div>
                 </Card>
                 <Card className="p-4">
                   <div className="text-xs text-neutral-400">Claim status</div>
@@ -359,6 +392,25 @@ export default function Home() {
                     </Card>
                   </>
                 )}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-10 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+            <div className="px-6 pt-6 pb-6 space-y-1">
+              <div className="text-lg font-semibold text-neutral-50">Tokenomics</div>
+              <div className="text-xs text-neutral-400">Total supply: 1,000,000,000 VIN</div>
+            </div>
+            <CardContent className="space-y-4">
+              <div className="grid gap-3 sm:grid-cols-2">
+                {TOKENOMICS.map((bucket) => (
+                  <Card key={bucket.label} className="p-4">
+                    <div className="text-xs text-neutral-400">{bucket.label}</div>
+                    <div className="mt-1 text-lg font-semibold text-neutral-50">{bucket.amount}</div>
+                    <div className="mt-1 text-xs text-neutral-400">{bucket.percent}</div>
+                    {bucket.note && <div className="mt-1 text-xs text-neutral-400">{bucket.note}</div>}
+                  </Card>
+                ))}
               </div>
             </CardContent>
           </Card>
