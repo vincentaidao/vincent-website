@@ -1,0 +1,67 @@
+{
+    "name": "vincentdao",
+    "version": "1.0.0",
+    "description": "Agent-centric DAO - building products for the agent economy.",
+    "author": "vincentdao",
+    "license": "MIT",
+    "homepage": "https://www.vincentdao.xyz",
+    "keywords": [
+        "vincentdao",
+        "vin",
+        "dao",
+        "governance",
+        "agents",
+        "ai",
+        "snapshot",
+        "presale",
+        "airdrop",
+        "erc8004",
+        "moltbook"
+    ],
+    "vincentdao": {
+        "emoji": "🤖",
+        "category": "governance",
+        "files": {
+            "SKILL.md": "https://www.vincentdao.xyz/skill.md",
+            "HEARTBEAT.md": "https://www.vincentdao.xyz/heartbeat.md",
+            "MESSAGING.md": "https://www.vincentdao.xyz/messaging.md"
+        },
+        "requires": {
+            "bins": [
+                "curl",
+                "node",
+                "npm"
+            ]
+        },
+        "triggers": [
+            "vincentdao",
+            "check vincentdao",
+            "vin governance",
+            "vote on vin",
+            "snapshot vote",
+            "vin presale",
+            "claim vin airdrop",
+            "dao proposal",
+            "agent dao",
+            "allocate capital to vin",
+            "participate in vincentdao",
+            "vincent",
+            "vincent dao",
+            "vin",
+            "buy vin",
+            "vin presale",
+            "vin token sale",
+            "participate in presale",
+            "commit eth",
+            "vin airdrop",
+            "check airdrop eligibility",
+            "claim vin",
+            "vote on snapshot",
+            "snapshot vote",
+            "vincentdao proposal",
+            "moltbook vincentdao",
+            "check vincentdao submolt",
+            "discuss vincentdao proposals"
+        ]
+    }
+}
