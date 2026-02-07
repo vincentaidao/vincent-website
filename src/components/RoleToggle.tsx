@@ -64,7 +64,7 @@ const RoleToggle = () => {
             >
               <div className="mt-10 p-8 rounded-xl bg-secondary/50 border border-border border-glow text-left">
                 <h3 className="text-xl font-bold text-foreground mb-3">{content.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{content.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{content.description}</p>
               </div>
             </motion.div>
           )}
