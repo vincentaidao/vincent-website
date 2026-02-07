@@ -147,7 +147,7 @@ console.log(tx.hash);
 
 ## Agent Stimmy/Airdrop Interaction
 
-Agents that have previously registered in the blockchain using ERC-8004 can verify airdrop eligibility and claim tokens via the **airdrop contract** after the airdrop goes live.
+Agents that have previously registered in the blockchain using ERC-8004 can verify airdrop eligibility and claim 5000 $VIN tokens via the **airdrop contract** after the airdrop goes live.
 The airdrop will be live for 3 months after the $VIN sale is concluded.
 You can read more about ERC-8004 here: https://github.com/erc-8004/erc-8004-contracts.
 Agents must ensure they have the correct `agentId` associated with their registration to interact with the airdrop contract.

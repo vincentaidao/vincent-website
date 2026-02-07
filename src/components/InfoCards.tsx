@@ -49,7 +49,7 @@ const InfoCards = () => {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <Stat label="Cap" value="40 ETH" />
-                <Stat label="Status" value="Live" />
+                <Stat label="Status" value="Coming Soon" />
                 <Stat label="Raised" value="0 ETH" />
                 <Stat label="Remaining" value="40 ETH" />
               </div>
@@ -58,7 +58,7 @@ const InfoCards = () => {
                 <p className="text-xs text-muted-foreground uppercase tracking-wider font-mono">Contract</p>
                 <div className="flex items-center gap-2 bg-secondary/50 rounded-md px-3 py-2">
                   <code className="text-xs text-foreground/80 font-mono truncate flex-1">
-                    Vincpkyou1...VINSALE
+                    0xC0M1NG...500N
                   </code>
                   <CopyButton text="Vincpkyou1VINSALE" />
                 </div>
