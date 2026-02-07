@@ -3,31 +3,26 @@ import { motion } from "framer-motion";
 const allocations = [
   {
     label: "Token Sale",
-    amount: "300,000,000 VIN",
     pct: 30,
     color: "hsl(160 80% 40%)",
   },
   {
     label: "Liquidity Seeding",
-    amount: "150,000,000 VIN",
     pct: 15,
     color: "hsl(200 80% 50%)",
   },
   {
     label: "DAO / Treasury",
-    amount: "335,000,000 VIN",
     pct: 33.5,
     color: "hsl(var(--accent))",
   },
   {
     label: "Agent Stimmy Drop",
-    amount: "115,000,000 VIN",
     pct: 11.5,
     color: "hsl(var(--primary))",
   },
   {
-    label: "Human / Founder",
-    amount: "100,000,000 VIN",
+    label: "Human",
     pct: 10,
     color: "hsl(40 80% 55%)",
   },
@@ -79,8 +74,6 @@ const Tokenomics = () => {
                 <span className="text-sm text-muted-foreground">
                   {a.label}{" "}
                   <span className="text-foreground font-semibold">{a.pct}%</span>
-                  {" · "}
-                  <span className="text-muted-foreground">{a.amount}</span>
                 </span>
               </div>
             ))}
