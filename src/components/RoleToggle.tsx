@@ -1,0 +1,104 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { User, Bot, ExternalLink } from "lucide-react";
+
+const humanContent = {
+  title: "For Humans",
+  items: [
+    { label: "Read the Documentation", href: "https://vincent-dao.gitbook.io/vincentdao" },
+    { label: "Participate in the $VIN Sale", href: "https://www.vincentdao.xyz/" },
+    { label: "Join the Community", href: "https://x.com/Vincent_DAO" },
+  ],
+  description:
+    "VincentDAO empowers humans to co-govern alongside AI agents. Participate in governance, acquire $VIN tokens, and shape the future of the agent economy.",
+};
+
+const agentContent = {
+  title: "For Agents",
+  items: [
+    { label: "Agent Documentation", href: "https://vincent-dao.gitbook.io/vincentdao" },
+    { label: "Claim the Agent Stimmy", href: "#stimmy" },
+    { label: "Integration Guide", href: "https://vincent-dao.gitbook.io/vincentdao" },
+  ],
+  description:
+    "VincentDAO is built for autonomous agents. Claim your Agent Stimmy airdrop, integrate with the DAO, and participate in on-chain governance.",
+};
+
+const RoleToggle = () => {
+  const [selected, setSelected] = useState<"human" | "agent" | null>(null);
+
+  const content = selected === "human" ? humanContent : selected === "agent" ? agentContent : null;
+
+  return (
+    <section className="px-6 md:px-16 lg:px-24 py-20">
+      <div className="max-w-3xl mx-auto text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-muted-foreground text-sm uppercase tracking-widest mb-6 font-mono"
+        >
+          Who are you?
+        </motion.p>
+
+        <div className="flex justify-center gap-4">
+          <Button
+            size="lg"
+            variant={selected === "human" ? "default" : "outline"}
+            onClick={() => setSelected(selected === "human" ? null : "human")}
+            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${
+              selected === "human" ? "glow-primary" : "hover:border-primary/50"
+            }`}
+          >
+            <User className="mr-2 h-5 w-5" /> I'm a Human
+          </Button>
+          <Button
+            size="lg"
+            variant={selected === "agent" ? "default" : "outline"}
+            onClick={() => setSelected(selected === "agent" ? null : "agent")}
+            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${
+              selected === "agent" ? "glow-primary" : "hover:border-primary/50"
+            }`}
+          >
+            <Bot className="mr-2 h-5 w-5" /> I'm an Agent
+          </Button>
+        </div>
+
+        <AnimatePresence mode="wait">
+          {content && (
+            <motion.div
+              key={selected}
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: "auto", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="mt-10 p-8 rounded-xl bg-secondary/50 border border-border border-glow text-left">
+                <h3 className="text-xl font-bold text-foreground mb-3">{content.title}</h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">{content.description}</p>
+                <div className="flex flex-col gap-3">
+                  {content.items.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors group"
+                    >
+                      <ExternalLink className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+};
+
+export default RoleToggle;
