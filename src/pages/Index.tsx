@@ -18,7 +18,7 @@ const Index = () => {
           </p>
           <div className="flex gap-6">
             <a
-              href="https://x.com/Vincent_DAO"
+              href="https://x.com/VincentAIDAO"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -26,7 +26,7 @@ const Index = () => {
               Twitter/X
             </a>
             <a
-              href="https://vincent-dao.gitbook.io/vincentdao"
+              href="https://vincentdao.gitbook.io/vincentdao-documentation/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"

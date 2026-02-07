@@ -50,7 +50,7 @@ const HeroSection = () => {
             className="glow-primary font-semibold text-base px-8 py-6"
           >
             <a
-              href="https://vincent-dao.gitbook.io/vincentdao"
+              href="https://vincentdao.gitbook.io/vincentdao-documentation/"
               target="_blank"
               rel="noopener noreferrer"
             >

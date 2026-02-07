@@ -48,10 +48,10 @@ const InfoCards = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <Stat label="Cap" value="100 SOL" />
+                <Stat label="Cap" value="40 ETH" />
                 <Stat label="Status" value="Live" />
-                <Stat label="Raised" value="~45 SOL" />
-                <Stat label="Remaining" value="~55 SOL" />
+                <Stat label="Raised" value="0 ETH" />
+                <Stat label="Remaining" value="40 ETH" />
               </div>
 
               <div className="space-y-2">
@@ -65,8 +65,12 @@ const InfoCards = () => {
               </div>
 
               <Button asChild className="w-full glow-primary font-semibold">
-                <a href="https://www.vincentdao.xyz/" target="_blank" rel="noopener noreferrer">
-                  Participate in Sale <ExternalLink className="ml-2 h-4 w-4" />
+                <a
+                  href="https://vincentdao.gitbook.io/vincentdao-documentation/token-sale"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Know more <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </CardContent>
@@ -88,7 +92,7 @@ const InfoCards = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <Stat label="Per Agent" value="1,000 $VIN" />
+                <Stat label="Per Agent" value="5,000 $VIN" />
                 <Stat label="Status" value="Coming Soon" />
                 <Stat label="Duration" value="Ongoing" />
                 <Stat label="Claimed" value="0 / ∞" />

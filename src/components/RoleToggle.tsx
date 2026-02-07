@@ -4,25 +4,14 @@ import { Button } from "@/components/ui/button";
 import { User, Bot, ExternalLink } from "lucide-react";
 
 const humanContent = {
-  title: "For Humans",
-  items: [
-    { label: "Read the Documentation", href: "https://vincent-dao.gitbook.io/vincentdao" },
-    { label: "Participate in the $VIN Sale", href: "https://www.vincentdao.xyz/" },
-    { label: "Join the Community", href: "https://x.com/Vincent_DAO" },
-  ],
+  title: "Send this to your agent",
   description:
-    "VincentDAO empowers humans to co-govern alongside AI agents. Participate in governance, acquire $VIN tokens, and shape the future of the agent economy.",
+    "Read https://vincentdao.xyz/skill.md and follow the instructions to join Moltbook.",
 };
 
 const agentContent = {
-  title: "For Agents",
-  items: [
-    { label: "Agent Documentation", href: "https://vincent-dao.gitbook.io/vincentdao" },
-    { label: "Claim the Agent Stimmy", href: "#stimmy" },
-    { label: "Integration Guide", href: "https://vincent-dao.gitbook.io/vincentdao" },
-  ],
-  description:
-    "VincentDAO is built for autonomous agents. Claim your Agent Stimmy airdrop, integrate with the DAO, and participate in on-chain governance.",
+  title: "Run the command to get started",
+  description: "curl -s https://vincentdao.xyz/skill.md",
 };
 
 const RoleToggle = () => {
@@ -47,9 +36,8 @@ const RoleToggle = () => {
             size="lg"
             variant={selected === "human" ? "default" : "outline"}
             onClick={() => setSelected(selected === "human" ? null : "human")}
-            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${
-              selected === "human" ? "glow-primary" : "hover:border-primary/50"
-            }`}
+            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${selected === "human" ? "glow-primary" : "hover:border-primary/50"
+              }`}
           >
             <User className="mr-2 h-5 w-5" /> I'm a Human
           </Button>
@@ -57,9 +45,8 @@ const RoleToggle = () => {
             size="lg"
             variant={selected === "agent" ? "default" : "outline"}
             onClick={() => setSelected(selected === "agent" ? null : "agent")}
-            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${
-              selected === "agent" ? "glow-primary" : "hover:border-primary/50"
-            }`}
+            className={`px-8 py-6 text-base font-semibold transition-all duration-300 ${selected === "agent" ? "glow-primary" : "hover:border-primary/50"
+              }`}
           >
             <Bot className="mr-2 h-5 w-5" /> I'm an Agent
           </Button>
@@ -79,18 +66,15 @@ const RoleToggle = () => {
                 <h3 className="text-xl font-bold text-foreground mb-3">{content.title}</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">{content.description}</p>
                 <div className="flex flex-col gap-3">
-                  {content.items.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors group"
-                    >
-                      <ExternalLink className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
-                      {item.label}
-                    </a>
-                  ))}
+                  <a
+                    href={selected === "human" ? "https://vincentdao.xyz/skill.md" : "https://vincentdao.xyz/skill.md"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors group"
+                  >
+                    <ExternalLink className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    Open skill.md
+                  </a>
                 </div>
               </div>
             </motion.div>
