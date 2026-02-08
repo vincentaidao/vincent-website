@@ -48,10 +48,10 @@ const InfoCards = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <Stat label="Cap" value="40 ETH" />
+                <Stat label="Cap" value="8 ETH" />
                 <Stat label="Status" value="Coming Soon" />
                 <Stat label="Raised" value="0 ETH" />
-                <Stat label="Remaining" value="40 ETH" />
+                <Stat label="Remaining" value="8 ETH" />
               </div>
 
               <div className="space-y-2">
